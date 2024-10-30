@@ -48,7 +48,9 @@ to perform operations on `User` objects and return responses. The main endpoints
    - Watch the docker composer explanation in the file `docker-and-docker-composer.md`
 
 3. **Run the Application**:
+   - First run the docker-composer file.
    - Navigate to the project directory.
+   - Right click in the class called `UserAgendaApplication.java` > Run as > Java Applications. Or
    - Run the following command to start the application:
      ```bash
      mvn spring-boot:run
