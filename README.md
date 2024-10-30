@@ -59,30 +59,7 @@ to perform operations on `User` objects and return responses. The main endpoints
 
 ## Example CURL Commands for Testing
 
-- **Create a User**:
-   ```bash
-   curl -X POST http://localhost:8081/api/users       -H "Content-Type: application/json"       -d '{"name": "John", "lastname": "Doe", "hobbie": "Reading", "description": "A reader of mystery novels", "photo": null}'
-   ```
-
-- **Get All Users**:
-   ```bash
-   curl -X GET http://localhost:8081/api/users
-   ```
-
-- **Get a User by ID**:
-   ```bash
-   curl -X GET http://localhost:8081/api/users/1
-   ```
-
-- **Update a User**:
-   ```bash
-   curl -X PUT http://localhost:8081/api/users/1       -H "Content-Type: application/json"       -d '{"name": "Jane", "lastname": "Doe", "hobbie": "Traveling", "description": "A world traveler", "photo": null}'
-   ```
-
-- **Delete a User**:
-   ```bash
-   curl -X DELETE http://localhost:8081/api/users/1
-   ```
+   - Watch the explanation of the file `test-by-terminal.md`
 
 ## Technologies Used
 - **Spring Boot**: For building and running the REST API
