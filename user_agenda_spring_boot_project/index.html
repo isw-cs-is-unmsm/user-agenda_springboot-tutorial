@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Agenda CRUD</title>
+  <style>
+      body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+      input, textarea { display: block; margin: 10px 0; width: 100%; padding: 8px; }
+      button { margin: 5px 0; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h1>User Agenda CRUD</h1>
+
+  <!-- Create User Form -->
+  <h2>Create User</h2>
+  <input type="text" id="name" placeholder="Name">
+  <input type="text" id="lastname" placeholder="Last Name">
+  <input type="text" id="hobbie" placeholder="Hobby">
+  <textarea id="description" placeholder="Description"></textarea>
+  <button onclick="createUser()">Create User</button>
+
+  <!-- Update User Form -->
+  <h2>Update User</h2>
+  <input type="number" id="updateId" placeholder="User ID to Update">
+  <input type="text" id="updateName" placeholder="Updated Name">
+  <input type="text" id="updateLastname" placeholder="Updated Last Name">
+  <input type="text" id="updateHobbie" placeholder="Updated Hobby">
+  <textarea id="updateDescription" placeholder="Updated Description"></textarea>
+  <button onclick="updateUser()">Update User</button>
+
+  <!-- Get Users -->
+  <h2>Get All Users</h2>
+  <button onclick="getAllUsers()">Fetch All Users</button>
+  <div id="users"></div>
+
+  <!-- Get User by ID -->
+  <h2>Get User by ID</h2>
+  <input type="number" id="userId" placeholder="User ID">
+  <button onclick="getUserById()">Fetch User</button>
+  <div id="singleUser"></div>
+
+  <!-- Delete User by ID -->
+  <h2>Delete User</h2>
+  <input type="number" id="deleteId" placeholder="User ID to Delete">
+  <button onclick="deleteUser()">Delete User</button>
+
+  <script>
+    const baseUrl = 'http://localhost:8081/api/users';
+
+    async function createUser() {
+      const user = {
+        name: document.getElementById('name').value,
+        lastname: document.getElementById('lastname').value,
+        hobbie: document.getElementById('hobbie').value,
+        description: document.getElementById('description').value,
+        photo: null
+      };
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+      const result = await response.json();
+      alert(`User Created: ${JSON.stringify(result)}`);
+    }
+
+    async function updateUser() {
+      const userId = document.getElementById('updateId').value;
+      const user = {
+        name: document.getElementById('updateName').value,
+        lastname: document.getElementById('updateLastname').value,
+        hobbie: document.getElementById('updateHobbie').value,
+        description: document.getElementById('updateDescription').value,
+        photo: null
+      };
+      const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+      const result = await response.json();
+      alert(`User Updated: ${JSON.stringify(result)}`);
+    }
+
+    async function getAllUsers() {
+      const response = await fetch(baseUrl);
+      const users = await response.json();
+      document.getElementById('users').innerHTML = `<pre>${JSON.stringify(users, null, 2)}</pre>`;
+    }
+
+    async function getUserById() {
+      const userId = document.getElementById('userId').value;
+      const response = await fetch(`${baseUrl}/${userId}`);
+      const user = await response.json();
+      document.getElementById('singleUser').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
+    }
+
+    async function deleteUser() {
+      const userId = document.getElementById('deleteId').value;
+      const response = await fetch(`${baseUrl}/${userId}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        alert(`User with ID ${userId} deleted successfully.`);
+      } else {
+        alert(`Error deleting user with ID ${userId}.`);
+      }
+    }
+  </script>
+</body>
+</html>

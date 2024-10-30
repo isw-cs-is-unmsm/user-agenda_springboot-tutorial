@@ -1,0 +1,28 @@
+services:
+  mysql-db:
+    image: mysql:latest  # Use MySQL or MariaDB as needed
+    container_name: mysql-db
+    environment:
+      MYSQL_DATABASE: user_agenda_db
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql-db  # Links to the MySQL container
+      MYSQL_ROOT_PASSWORD: rootpassword  # Password to access as root
+    ports:
+      - "8080:80"  # Exposes phpMyAdmin on http://localhost:8080
+    depends_on:
+      - mysql-db
+
+volumes:
+  mysql_data:
+    driver: local
